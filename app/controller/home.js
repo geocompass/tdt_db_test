@@ -7,11 +7,37 @@ class HomeController extends Controller {
     this.ctx.body = "hi, egg";
   }
   async getPG() {
-    let result = await this.service.hello.getPG();
+    let type = this.ctx.params.type ? parseInt(this.ctx.params.type) : 1;
+    let from = this.ctx.query.from;
+    let count = this.ctx.query.count;
+    let result = await this.service.hello.getPG({
+      type,
+      from,
+      count
+    });
+    this.ctx.body = result;
+  }
+  async addPG() {
+    let type = this.ctx.params.type ? parseInt(this.ctx.params.type) : 1;
+    let result = await this.service.hello.addPG({
+      type
+    });
+    this.ctx.body = result;
+  }
+  async addManyPG() {
+    let type = this.ctx.params.type ? parseInt(this.ctx.params.type) : 1;
+    let count = this.ctx.query.count;
+    let result = await this.service.hello.addManyPG({
+      type,
+      count
+    });
     this.ctx.body = result;
   }
   async getMG() {
-    let result = await this.service.hello.getMG();
+    let x = this.ctx.query.x ? parseInt(this.ctx.query.x) : 0;
+    let result = await this.service.hello.getMG({
+      x
+    });
     this.ctx.body = result;
   }
   async addMG() {
