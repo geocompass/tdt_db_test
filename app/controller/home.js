@@ -24,17 +24,17 @@ class HomeController extends Controller {
     });
     this.ctx.body = result;
   }
-  async addManyPG() {
+  async addPGMany() {
     let type = this.ctx.params.type ? parseInt(this.ctx.params.type) : 1;
-    let count = this.ctx.query.count;
-    let result = await this.service.hello.addManyPG({
+    let count = this.ctx.query.count ? parseInt(this.ctx.query.count) : 10;
+    let result = await this.service.hello.addPGMany({
       type,
       count
     });
     this.ctx.body = result;
   }
   async getMG() {
-    let x = this.ctx.query.x ? parseInt(this.ctx.query.x) : 0;
+    let x = parseInt(this.ctx.query.x) ? parseInt(this.ctx.query.x) : 1;
     let result = await this.service.hello.getMG({
       x
     });

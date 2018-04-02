@@ -29,7 +29,9 @@ class Hello extends Service {
       data: result
     };
   }
-  async addPG(type = 1) {
+  async addPG({
+    type = 1
+  }) {
     const {
       ctx,
       config
@@ -51,7 +53,10 @@ class Hello extends Service {
     let result = await sequelize.query(sql);
     return result;
   }
-  async addPGMany(type = 1, count) {
+  async addPGMany({
+    type = 1,
+    count
+  }) {
     const {
       ctx,
       config
@@ -80,20 +85,27 @@ class Hello extends Service {
       data: result
     }
   }
-  async getMG(x = 1) {
-    let result = await this.ctx.model.Tile.findOne({
+  async getMG({
+    x = 1
+  }) {
+    const {
+      ctx,
+      config
+    } = this;
+    let query = {
       zoom_level: 3,
-      tile_column: x || 1,
+      tile_column: x,
       tile_row: 3
-    });
+    }
+    let result = await this.ctx.model.Tile.findOne(query);
     if (!result) {
       return {
-        result: "not found"
+        data: "not found"
       };
     }
     return {
       code: config.info.code,
-      data: result
+      data: result.tile_data
     };
   }
   async addMG(type = 1) {
