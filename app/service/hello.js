@@ -47,8 +47,7 @@ class Hello extends Service {
     }
     let geoStr = JSON.stringify(geojson);
 
-    let sql = `insert into ${pg_table} 
-    (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
+    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
     let sequelize = new Sequelize(config.sequelize);
     let result = await sequelize.query(sql);
     return result;
@@ -72,8 +71,7 @@ class Hello extends Service {
     }
     let geoStr = JSON.stringify(geojson);
 
-    let sql = `insert into ${pg_table} 
-    (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
+    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
     let sequelize = new Sequelize(config.sequelize);
     let result = null;
     for (let m = 0; m < count; m++) {
