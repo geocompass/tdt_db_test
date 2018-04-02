@@ -68,7 +68,7 @@ class Hello extends Service {
       pg_table = config.info.pg_table_d;
     }
 
-    let sql = `insert into ${pg_table} (geom) values(ST_setSrid('${wkt}',4326))`;
+    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_AsText('${wkt}'),4326))`;
     let sequelize = new Sequelize(config.sequelize);
     let result = null;
     for (let m = 0; m < count; m++) {
