@@ -36,18 +36,16 @@ class Hello extends Service {
       ctx,
       config
     } = this;
-    let geojson = util.pg_small;
+    let wkt = util.pg_small;
     let pg_table = config.info.pg_table_x;
     if (type == 2) {
-      geojson = util.pg_middle;
+      wkt = util.pg_middle;
       pg_table = config.info.pg_table_z;
     } else if (type == 3) {
-      geojson = util.pg_big;
+      wkt = util.pg_big;
       pg_table = config.info.pg_table_d;
     }
-    let geoStr = JSON.stringify(geojson);
-
-    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
+    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_AsText('${wkt}'),4326))`;
     let sequelize = new Sequelize(config.sequelize);
     let result = await sequelize.query(sql);
     return result;
@@ -60,18 +58,17 @@ class Hello extends Service {
       ctx,
       config
     } = this;
-    let geojson = util.pg_small;
+    let wkt = util.pg_small;
     let pg_table = config.info.pg_table_x;
     if (type == 2) {
-      geojson = util.pg_middle;
+      wkt = util.pg_middle;
       pg_table = config.info.pg_table_z;
     } else if (type == 3) {
-      geojson = util.pg_big;
+      wkt = util.pg_big;
       pg_table = config.info.pg_table_d;
     }
-    let geoStr = JSON.stringify(geojson);
 
-    let sql = `insert into ${pg_table} (geom) values(ST_setSrid(ST_GeomFromGeojson('${geoStr}'),4326))`;
+    let sql = `insert into ${pg_table} (geom) values(ST_setSrid('${wkt}',4326))`;
     let sequelize = new Sequelize(config.sequelize);
     let result = null;
     for (let m = 0; m < count; m++) {
